@@ -1,0 +1,74 @@
+{
+  "name": "invoice-editor",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "start": "vite",
+    "build": "vite build",
+    "test": "jest",
+    "typecheck": "tsc --noEmit",
+    "openapi:gen": "yarn -s typegen src/api/schema.yml > src/api/gen/client.d.ts && yarn openapi:convert",
+    "openapi:convert": "npx @redocly/openapi-cli bundle ./src/api/schema.yml -o ./src/api/gen/schema.json --format json",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "lint": "eslint . --max-warnings 0",
+    "verify": "yarn format:check && yarn lint && yarn typecheck && yarn test --ci && yarn build",
+    "verify:pr": "node scripts/verify-pr.mjs",
+    "deploy": "node scripts/check-deploy-env.mjs && yarn build && wrangler pages deploy dist --project-name invoice-editor --branch main",
+    "deploy:preview": "node scripts/check-deploy-env.mjs && yarn build && wrangler pages deploy dist --project-name invoice-editor --branch preview"
+  },
+  "dependencies": {
+    "@hookform/resolvers": "5.4.0",
+    "@tanstack/react-query": "5.101.2",
+    "antd": "6.5.0",
+    "axios": "1.18.1",
+    "big.js": "7.0.1",
+    "dayjs": "1.11.21",
+    "openapi-client-axios": "7.9.0",
+    "react": "19.2.7",
+    "react-dom": "19.2.7",
+    "react-hook-form": "7.81.0",
+    "react-router": "7.18.1",
+    "yup": "1.7.1"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "@eslint/js": "10.0.1",
+    "@redocly/openapi-cli": "1.0.0-beta.95",
+    "@testing-library/dom": "10.4.1",
+    "@testing-library/jest-dom": "6.9.1",
+    "@testing-library/react": "16.3.0",
+    "@testing-library/user-event": "14.6.1",
+    "@types/big.js": "7.0.0",
+    "@types/jest": "29.5.14",
+    "@types/node": "22.15.3",
+    "@types/react": "19.2.17",
+    "@types/react-dom": "19.2.3",
+    "@vitejs/plugin-react": "6.0.3",
+    "eslint": "10.11.0",
+    "eslint-plugin-react-hooks": "7.1.1",
+    "globals": "17.12.0",
+    "jest": "30.2.0",
+    "jest-environment-jsdom": "30.4.1",
+    "jest-fixed-jsdom": "0.0.11",
+    "msw": "2.11.3",
+    "openapi-client-axios-typegen": "7.7.0",
+    "prettier": "3.9.4",
+    "ts-jest": "29.4.11",
+    "typescript": "6.0.3",
+    "typescript-eslint": "8.71.0",
+    "vite": "8.1.3",
+    "wrangler": "4.143.0"
+  }
+}

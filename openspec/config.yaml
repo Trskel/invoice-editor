@@ -1,0 +1,43 @@
+schema: spec-driven
+
+context: |
+  Product: invoice editor for small businesses (list, view, create, edit,
+  finalize, delete, mark as paid) on top of an existing REST API.
+
+  Tech stack: React 19, TypeScript (strict), Vite, antd 6, React Router 7,
+  TanStack Query 5, react-hook-form + yup, big.js, dayjs,
+  openapi-client-axios (generated client in src/api/gen).
+  Tests: Jest, React Testing Library, user-event, MSW 2.
+  Node and yarn versions are pinned in .tool-versions.
+
+  Architecture rules:
+  - Pages compose, components render, hooks fetch, model/ is pure TypeScript.
+  - Server data lives in TanStack Query, never copied into component state.
+  - URL is the source of truth for navigation state (page, filters, sort).
+  - Money is handled as decimal strings and big.js end to end; no floats.
+
+  API facts that shape requirements:
+  - Amounts are tax-inclusive decimal strings.
+  - Finalized invoices are immutable except for the paid flag (server-enforced).
+  - The API accepts some invalid input (zero or fractional quantities,
+    deadline before date, unknown filter operators), so validation and
+    filter building live in the client.
+
+  Conventions:
+  - Conventional Commits; one OpenSpec change per pull request.
+  - Change names start with the two-digit roadmap number, which is also the
+    GitHub issue number (for example `02-add-invoices-list` for issue #2).
+    The archive adds the date in front, so archived changes sort in delivery
+    order even when several are archived on the same day.
+  - Every scenario is covered by at least one automated test or an explicit
+    manual verification step listed in the pull request.
+  - No new dependency without a written justification in the change design.
+
+rules:
+  proposal:
+    - Include a Non-goals section so scope is explicit.
+  specs:
+    - Describe user-observable behavior; keep library names out of specs.
+    - Cover loading, empty, error and success states for every async path.
+  tasks:
+    - Each task states how it is verified.

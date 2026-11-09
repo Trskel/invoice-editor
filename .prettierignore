@@ -1,0 +1,9 @@
+*.json
+/build
+/dist
+/coverage
+yarn.lock
+public/
+src/api/schema.yml
+src/api/gen
+.claude/
